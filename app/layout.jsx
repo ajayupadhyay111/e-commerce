@@ -1,6 +1,7 @@
 import { Toaster } from "sonner";
 import "./globals.css";
 import { Assistant } from "next/font/google";
+import GlobalStoreProvider from "@/components/application/GlobalStoreProvider";
 
 const assistantFont = Assistant({
   weight: ["400", "500", "600", "700", "800"],
@@ -17,8 +18,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={` ${assistantFont.className} antialiased`}>
-        <Toaster position="top-right" />
-        {children}
+        <GlobalStoreProvider>
+          <Toaster position="top-right" />
+          {children}
+        </GlobalStoreProvider>
       </body>
     </html>
   );

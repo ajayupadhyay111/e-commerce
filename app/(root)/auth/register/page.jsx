@@ -24,17 +24,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ButtonLoading from "@/components/application/ButtonLoading";
 import { toast } from "sonner";
 import { WEBSITE_LOGIN } from "@/routes/WebsiteRoutes";
 import axios from "axios";
-import { response } from "@/lib/helperFunction";
+import ButtonLoading from "@/components/application/ButtonLoading";
 
 // Mock API function - replace with your actual API call
 async function registerUser(credentials) {
-  // Simulate API call
-  // await new Promise(resolve => setTimeout(resolve, 2000));
-
   // Replace this with your actual API call
   const { data } = await axios.post("/api/auth/register", credentials);
   if (!data.success) {

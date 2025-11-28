@@ -10,9 +10,15 @@ import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
 
 export async function POST(request) {
-  connectDB();
+  await connectDB();
   const body = await request.json();
-  const validatedData = loginSchema.safeParse(body);
+
+  const formSchema = loginSchema.pick({
+    email: true,
+    password: true,
+  });
+
+  const validatedData = formSchema.safeParse(body);
 
   if (!validatedData.success) {
     return response(
@@ -26,7 +32,9 @@ export async function POST(request) {
   const { email, password } = validatedData.data;
 
   try {
-    const user = await UserModel.findOne({ email }).select("+password");
+    const user = await UserModel.findOne({ deletedAt: null, email }).select(
+      "+password"
+    );
     if (!user) {
       return response(false, 404, "User not found");
     }
@@ -57,6 +65,7 @@ export async function POST(request) {
       return response(false, 401, "Invalid password");
     }
 
+    console.log("hello 2");
     // otp generation
     await OtpModel.deleteMany({ email });
 
@@ -75,7 +84,7 @@ export async function POST(request) {
       return response(false, 400, "Failed to send otp");
     }
 
-    return response(true, 200, "Please verify your device");
+    return response(true, 200, "Please verify your email");
   } catch (error) {
     console.log(error);
     return catchError(error);
