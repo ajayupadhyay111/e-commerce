@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/lib/schemas/auth-schema";
+import { loginSchema } from "@/lib/schemas/schemas";
 import Link from "next/link";
 
 import {

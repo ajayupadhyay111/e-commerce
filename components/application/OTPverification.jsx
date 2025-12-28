@@ -1,6 +1,6 @@
 "use client";
 
-import { loginSchema } from "@/lib/schemas/auth-schema";
+import { loginSchema } from "@/lib/schemas/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -118,7 +118,7 @@ const OTPverification = ({ email, onSubmit, loading }) => {
 
       {/* Resend OTP Section */}
       <div className="text-center text-sm">
-        Didn't receive the OTP?{" "}
+        Didn&apos;t receive the OTP?{" "}
         <button
           type="button"
           onClick={handleResendOTP}
@@ -128,8 +128,8 @@ const OTPverification = ({ email, onSubmit, loading }) => {
           {timer > 0
             ? `Resend OTP in ${timer}s`
             : isResendingOTP
-            ? "Resending..."
-            : "Resend OTP"}
+              ? "Resending..."
+              : "Resend OTP"}
         </button>
       </div>
     </form>

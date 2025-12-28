@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import ButtonLoading from "@/components/application/ButtonLoading";
 import { WEBSITE_LOGIN } from "@/routes/WebsiteRoutes";
 import { useRouter } from "next/navigation";
-import { registerSchema } from "@/lib/schemas/auth-schema";
+import { registerSchema } from "@/lib/schemas/schemas";
 
 // ---------------------
 // API FUNCTION

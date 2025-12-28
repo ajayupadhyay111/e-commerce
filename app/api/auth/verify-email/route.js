@@ -1,5 +1,5 @@
-import { connectDB } from "@/lib/db";
-import { catchError, response } from "@/lib/helperFunction";
+import { connectDB } from "@/lib/server/db";
+import { catchError, response } from "@/lib/server/helperFunction";
 import UserModel from "@/models/User.model";
 import { jwtVerify } from "jose";
 
@@ -23,9 +23,8 @@ export async function POST(request) {
     }
 
     user.isEmailVerified = true;
-    console.log("user");
     await user.save();
-    console.log("user1");
+
     return response(true, 200, "Email Verification successfull.");
   } catch (error) {
     console.log(error);

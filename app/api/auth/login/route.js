@@ -1,9 +1,9 @@
 import { emailVerificationLink } from "@/email/emailVerificationLink";
 import { otpEmail } from "@/email/otpEmail";
-import { connectDB } from "@/lib/db";
-import { catchError, response } from "@/lib/helperFunction";
-import { loginSchema } from "@/lib/schemas/auth-schema";
-import { sendMail } from "@/lib/sendEmail";
+import { connectDB } from "@/lib/server/db";
+import { catchError, response } from "@/lib/server/helperFunction";
+import { loginSchema } from "@/lib/schemas/schemas";
+import { sendMail } from "@/lib/server/sendEmail";
 import OtpModel from "@/models/Otp.model";
 import UserModel from "@/models/User.model";
 import bcrypt from "bcryptjs";
@@ -45,7 +45,7 @@ export async function POST(request) {
       const token = await new SignJWT({ userId: user._id.toString() })
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("1h")
+        .setExpirationTime("24h")
         .sign(secret);
 
       const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email/${token}`;
@@ -65,7 +65,6 @@ export async function POST(request) {
       return response(false, 401, "Invalid password");
     }
 
-    console.log("hello 2");
     // otp generation
     await OtpModel.deleteMany({ email });
 

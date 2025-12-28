@@ -1,10 +1,10 @@
-import { connectDB } from "@/lib/db";
+import { connectDB } from "@/lib/server/db";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    await connectDB();
-    return NextResponse.json({
-        success: true,
-        message: "Connect successfull"
-    })
+  await connectDB();
+  return NextResponse.json({
+    success: true,
+    message: "Connect successfull",
+  });
 }

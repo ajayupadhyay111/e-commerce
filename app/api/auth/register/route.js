@@ -1,8 +1,8 @@
 import { emailVerificationLink } from "@/email/emailVerificationLink";
-import { connectDB } from "@/lib/db";
-import { response, catchError } from "@/lib/helperFunction";
-import { registerSchema } from "@/lib/schemas/auth-schema";
-import { sendMail } from "@/lib/sendEmail";
+import { connectDB } from "@/lib/server/db";
+import { response, catchError } from "@/lib/server/helperFunction";
+import { registerSchema } from "@/lib/schemas/schemas";
+import { sendMail } from "@/lib/server/sendEmail";
 import UserModel from "@/models/User.model";
 import { SignJWT } from "jose";
 import bcrypt from "bcryptjs";

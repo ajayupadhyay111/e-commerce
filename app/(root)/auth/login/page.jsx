@@ -1,10 +1,9 @@
-// components/auth-form.tsx
 "use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/lib/schemas/auth-schema";
+import { loginSchema } from "@/lib/schemas/schemas";
 import Link from "next/link";
 
 import {
@@ -38,10 +37,7 @@ import { login } from "@/store/reducer/authReducer";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_DASHBOARD } from "@/routes/AdminPanelRoutes";
 
-// Mock API function - replace with your actual API call
 async function loginUser(credentials) {
-  // Replace this with your actual API call
-  console.log(credentials);
   const { data: LoginResponse } = await axios.post(
     "/api/auth/login",
     credentials
@@ -77,21 +73,17 @@ export default function AuthForm() {
   async function onSubmit(data) {
     setIsLoading(true);
     try {
-      // Call your API
       const result = await loginUser(data);
       setOTPEmail(data.email);
 
-      // Reset form on success
       form.reset();
     } catch (error) {
-      console.error("Login error:", error);
       toast.error(
         error instanceof Error
           ? error.response.data.message
           : "Login failed. Please try again."
       );
 
-      // You can also set form errors if needed
       form.setError("root", {
         type: "manual",
         message: error instanceof Error ? error.message : "Login failed",
@@ -101,7 +93,6 @@ export default function AuthForm() {
     }
   }
 
-  // Using react-hook-form's built-in loading state
   const isSubmitting = form.formState.isSubmitting;
 
   const handleOtpSubmission = async (data) => {
@@ -126,7 +117,6 @@ export default function AuthForm() {
       setOTPverificationLoading(false);
       setOTPEmail("");
     } catch (error) {
-      console.error("OTP verification error:", error);
       toast.error(
         error instanceof Error
           ? error.message
@@ -230,7 +220,7 @@ export default function AuthForm() {
 
                   {/* Create Account Link */}
                   <div className="text-sm text-muted-foreground">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link
                       href={WEBSITE_REGISTER}
                       className="font-medium text-yellow-600 hover:text-yellow-700 hover:underline transition-colors duration-200"

@@ -1,8 +1,8 @@
 import { otpEmail } from "@/email/otpEmail";
-import { connectDB } from "@/lib/db";
-import { catchError, response } from "@/lib/helperFunction";
-import { loginSchema } from "@/lib/schemas/auth-schema";
-import { sendMail } from "@/lib/sendEmail";
+import { connectDB } from "@/lib/server/db";
+import { catchError, response } from "@/lib/server/helperFunction";
+import { loginSchema } from "@/lib/schemas/schemas";
+import { sendMail } from "@/lib/server/sendEmail";
 import OtpModel from "@/models/Otp.model";
 import UserModel from "@/models/User.model";
 
