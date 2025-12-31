@@ -1,9 +1,7 @@
-import cloudinary from "@/lib/cloudinary";
 import { connectDB } from "@/lib/db";
 import { catchError, response } from "@/lib/helperFunction";
 import { isAuthenticated } from "@/lib/isAuthentication";
-import MediaModel from "@/models/media.model";
-import mongoose from "mongoose";
+import CategoryModel from "@/models/category.model";
 
 export async function PUT(request) {
   try {
@@ -22,21 +20,21 @@ export async function PUT(request) {
       return response(false, 400, "No delete type provided.");
     }
 
-    const media = await MediaModel.find({ _id: { $in: ids } }).lean();
-    if (!media?.length) {
-      return response(false, 404, "No media found.");
+    const category = await CategoryModel.find({ _id: { $in: ids } }).lean();
+    if (!category?.length) {
+      return response(false, 404, "No category found.");
     }
     if (!["SD", "RSD"].includes(deleteType)) {
       return response(false, 400, "Invalid delete type.");
     }
 
     if (deleteType === "RSD") {
-      await MediaModel.updateMany(
+      await CategoryModel.updateMany(
         { _id: { $in: ids } },
         { $set: { deletedAt: null } }
       );
     } else if (deleteType === "SD") {
-      await MediaModel.updateMany(
+      await CategoryModel.updateMany(
         { _id: { $in: ids } },
         { $set: { deletedAt: new Date().toISOString() } }
       );
@@ -46,8 +44,8 @@ export async function PUT(request) {
       true,
       200,
       deleteType === "RSD"
-        ? "Media restored successfully."
-        : "Media moved to trash successfully."
+        ? "Category restored successfully."
+        : "Category moved to trash successfully."
     );
   } catch (error) {
     return catchError(error);
@@ -55,9 +53,6 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
     const auth = await isAuthenticated("admin");
     if (!auth.isAuth) {
@@ -74,34 +69,21 @@ export async function DELETE(request) {
       return response(false, 400, "No delete type provided.");
     }
 
-    const media = await MediaModel.find({ _id: { $in: ids } })
+    const category = await CategoryModel.find({ _id: { $in: ids } })
       .session(session)
       .lean();
-    if (!media?.length) {
-      return response(false, 404, "No media found.");
+    if (!category?.length) {
+      return response(false, 404, "No category found.");
     }
 
     if (deleteType !== "PD") {
       return response(false, 400, "Invalid delete type.");
     }
 
-    await MediaModel.deleteMany({ _id: { $in: ids } }).session(session);
+    await CategoryModel.deleteMany({ _id: { $in: ids } });
 
-    // delete all data from cloudinary
-    const publicIds = media.map((media) => media.public_id);
-    try {
-      await cloudinary.api.delete_resources(publicIds);
-    } catch (error) {
-      session.abortTransaction();
-      session.endSession();
-    }
-
-    session.commitTransaction();
-    session.endSession();
-    return response(true, 200, "Media deleted successfully.");
+    return response(true, 200, "Category deleted successfully.");
   } catch (error) {
-    session.abortTransaction();
-    session.endSession();
     return catchError(error);
   }
 }

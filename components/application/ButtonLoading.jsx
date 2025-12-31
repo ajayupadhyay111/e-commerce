@@ -1,4 +1,4 @@
-import { cn } from "@/lib/server/utils";
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";

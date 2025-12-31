@@ -1,9 +1,6 @@
-import { connectDB } from "@/lib/server/db";
-import {
-  catchError,
-  isAuthenticated,
-  response,
-} from "@/lib/server/helperFunction";
+import { connectDB } from "@/lib/db";
+import { catchError, response } from "@/lib/helperFunction";
+import { isAuthenticated } from "@/lib/isAuthentication";
 import MediaModel from "@/models/media.model";
 import { NextResponse } from "next/server";
 import { _null } from "zod/v4/core";

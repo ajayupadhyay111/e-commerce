@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
-import { adminAppSidebarMenu } from "@/lib/server/adminSidebarMenu";
+import { adminAppSidebarMenu } from "@/lib/adminSidebarMenu";
 import {
   Collapsible,
   CollapsibleContent,

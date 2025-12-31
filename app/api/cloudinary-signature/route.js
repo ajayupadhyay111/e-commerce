@@ -1,5 +1,5 @@
-import cloudinary from "@/lib/server/cloudinary";
-import { catchError } from "@/lib/server/helperFunction";
+import cloudinary from "@/lib/cloudinary";
+import { catchError } from "@/lib/helperFunction";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {

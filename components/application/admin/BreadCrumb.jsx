@@ -4,7 +4,7 @@ const BreadCrumb = ({ data }) => {
     return (
         <Breadcrumb>
             <BreadcrumbList>
-                {data.length > 0 &&
+                {data?.length > 0 &&
                     data.map((item, index) => (
 
                         <BreadcrumbItem key={index}>

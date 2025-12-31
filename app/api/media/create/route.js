@@ -1,10 +1,7 @@
-import cloudinary from "@/lib/server/cloudinary";
-import { connectDB } from "@/lib/server/db";
-import {
-  catchError,
-  isAuthenticated,
-  response,
-} from "@/lib/server/helperFunction";
+import cloudinary from "@/lib/cloudinary";
+import { connectDB } from "@/lib/db";
+import { catchError, response } from "@/lib/helperFunction";
+import { isAuthenticated } from "@/lib/isAuthentication";
 import MediaModel from "@/models/media.model";
 
 export async function POST(request) {

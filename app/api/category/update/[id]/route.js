@@ -1,11 +1,12 @@
-import { mediaSchema } from "@/lib/schemas/schemas";
+import { categorySchema } from "@/lib/schemas/schemas";
 import { connectDB } from "@/lib/db";
 import { catchError, response } from "@/lib/helperFunction";
-import MediaModel from "@/models/media.model";
 import { isValidObjectId } from "mongoose";
+import CategoryModel from "@/models/category.model";
 import { isAuthenticated } from "@/lib/isAuthentication";
 
-export async function PUT(request) {
+export async function PUT(request, { params }) {
+  const { id } = await params;
   try {
     const auth = await isAuthenticated("admin");
     if (!auth) {
@@ -15,10 +16,9 @@ export async function PUT(request) {
 
     const payload = await request.json();
 
-    const schema = mediaSchema.pick({
-      _id: true,
-      alt: true,
-      title: true,
+    const schema = categorySchema.pick({
+      name: true,
+      slug: true,
     });
 
     const data = schema.safeParse(payload);
@@ -26,23 +26,23 @@ export async function PUT(request) {
       return response(false, 400, data.error.message);
     }
 
-    const { _id, alt, title } = data.data;
-    if (!isValidObjectId(_id)) {
+    const { name, slug } = data.data;
+    if (!isValidObjectId(id)) {
       return response(false, 400, "Invalid ID");
     }
 
-    const media = await MediaModel.findById(_id);
+    const category = await CategoryModel.findById(id);
 
-    if (!media) {
-      return response(false, 404, "Media not found");
+    if (!category) {
+      return response(false, 404, "Category not found");
     }
 
-    media.alt = alt;
-    media.title = title;
+    category.name = name;
+    category.slug = slug;
 
-    await media.save();
+    await category.save();
 
-    return response(true, 200, "Media updated successfully");
+    return response(true, 200, "Category updated successfully");
   } catch (error) {
     return catchError(error);
   }

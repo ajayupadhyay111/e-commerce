@@ -1,10 +1,7 @@
 import { categorySchema } from "@/lib/schemas/schemas";
-import { connectDB } from "@/lib/server/db";
-import {
-  catchError,
-  isAuthenticated,
-  response,
-} from "@/lib/server/helperFunction";
+import { connectDB } from "@/lib/db";
+import { catchError, response } from "@/lib/helperFunction";
+import { isAuthenticated } from "@/lib/isAuthentication";
 import CategoryModel from "@/models/category.model";
 
 export async function POST(request) {

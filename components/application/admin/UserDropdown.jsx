@@ -9,7 +9,6 @@ import LogoutButton from './LogoutButton'
 
 const UserDropdown = () => {
     const auth = useSelector((state) => state.authStore.auth)
-    console.log(auth)
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

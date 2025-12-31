@@ -1,7 +1,7 @@
 import { connectDB } from "@/lib/db";
 import { catchError, response } from "@/lib/helperFunction";
 import { isAuthenticated } from "@/lib/isAuthentication";
-import MediaModel from "@/models/media.model";
+import CategoryModel from "@/models/category.model";
 import { isValidObjectId } from "mongoose";
 
 export async function GET(request, { params }) {
@@ -20,12 +20,11 @@ export async function GET(request, { params }) {
       return response(false, 400, "Invalid object Id");
     }
     filter._id = id;
-    const getMedia = await MediaModel.findOne(filter).lean();
-    if (!getMedia) {
-      return response(false, 404, "Media not found");
+    const getCategory = await CategoryModel.findOne(filter).lean();
+    if (!getCategory) {
+      return response(false, 404, "Category not found");
     }
-    console.log(getMedia);
-    return response(true, 200, "Media found", getMedia);
+    return response(true, 200, "Category found", getCategory);
   } catch (error) {
     return catchError(error);
   }
